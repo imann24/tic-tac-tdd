@@ -1,0 +1,13 @@
+{
+  "name": "tic-tac-tdd",
+  "version": "1.0.0",
+  "description": "Tic-Tac-Toe created via test-driven-development",
+  "main": "src/index.js",
+  "scripts": {
+      "test": "jest tst/*"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^24.9.0"
+  }
+}
