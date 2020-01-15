@@ -2,7 +2,7 @@
   "name": "tic-tac-tdd",
   "version": "1.0.0",
   "description": "Tic-Tac-Toe created via test-driven-development",
-  "main": "src/index.js",
+  "main": "src/game.js",
   "scripts": {
       "test": "jest tst/*"
   },

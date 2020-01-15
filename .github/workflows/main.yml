@@ -6,9 +6,11 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
-            - uses: borales/actions-yarn@v2.0.0
-            - name: Install
-              run: yarn install
-            - name: Unit Tests
-              run: yarn test
+          - uses: actions/checkout@v1
+          - uses: actions/setup-node@v1
+            with:
+              node-version: '11.5'
+          - name: Install
+            run: yarn install
+          - name: Test
+            run: yarn test
