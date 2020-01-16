@@ -1,9 +1,13 @@
-name: Unit Tests
+name: Tests
 
 on: [push]
 
+env:
+    DOCKER_TAG: tic-tac-tdd
+
 jobs:
-    build:
+    test:
+        name: Unit Tests
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v1
@@ -14,3 +18,13 @@ jobs:
             run: yarn install
           - name: Test
             run: yarn test
+
+    docker-test:
+        name: Docker Tests
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v1
+          - name: Docker Build
+            run: docker build . -t $DOCKER_TAG
+          - name: Docker Test
+            run: docker run $DOCKER_TAG yarn test
