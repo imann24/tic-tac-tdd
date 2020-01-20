@@ -79,6 +79,57 @@ describe("game logic tests", () => {
             expect(gameState.turn).toBe("x");
             expect(gameState.winner).toBe(false);
         });
+
+        it("can identify when a player has won the game diagonally: NW -> SE", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 0, 1);
+            game.placeLetter("x", 1, 1);
+            game.placeLetter("o", 1, 2);
+            game.placeLetter("x", 2, 2);
+
+            expect(game.getState().winner).toBe("x");
+        });
+
+        it("can identify when a player has won the game diagonally: SW -> NE", () => {
+            game.placeLetter("x", 0, 2);
+            game.placeLetter("o", 0, 1);
+            game.placeLetter("x", 1, 1);
+            game.placeLetter("o", 1, 2);
+            game.placeLetter("x", 2, 0);
+
+            expect(game.getState().winner).toBe("x");
+        });
+
+        it("can identify when a player has won the game horizontally", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 0, 1);
+            game.placeLetter("x", 1, 0);
+            game.placeLetter("o", 1, 2);
+            game.placeLetter("x", 2, 0);
+
+            expect(game.getState().winner).toBe("x");
+        });
+
+        it("can identify when a player has won the game vertically", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 1, 1);
+            game.placeLetter("x", 0, 1);
+            game.placeLetter("o", 1, 2);
+            game.placeLetter("x", 0, 2);
+
+            expect(game.getState().winner).toBe("x");
+        });
+
+        it("can identify when a 'o' player has won the game", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 0, 1);
+            game.placeLetter("x", 2, 2);
+            game.placeLetter("o", 1, 1);
+            game.placeLetter("x", 0, 2);
+            game.placeLetter("o", 2, 1);
+
+            expect(game.getState().winner).toBe("o");
+        });
     });
 
     describe("placing letters", () => {
@@ -141,5 +192,17 @@ describe("game logic tests", () => {
             const letter = game.getBoard()[0][0];
             expect(letter).toBe(null);
         });
+
+        it("cannot place letters after game is won", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 0, 1);
+            game.placeLetter("x", 1, 0);
+            game.placeLetter("o", 1, 2);
+            game.placeLetter("x", 2, 0);
+            game.placeLetter("o", 2, 2);
+
+            const letter = game.getBoard()[2][2];
+            expect(letter).toBe(null);
+        })
     });
 });
