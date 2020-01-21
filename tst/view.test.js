@@ -32,7 +32,9 @@ describe("drawing", () => {
                         [null, null, null]]);
 
         expect(view.getSquare(0, 0).innerHTML).toBe("x");
+        expect(view.getSquare(0, 0).className).toBe("game-square x");
         expect(view.getSquare(0, 1).innerHTML).toBe("o");
+        expect(view.getSquare(0, 1).className).toBe("game-square o");
     })
 });
 

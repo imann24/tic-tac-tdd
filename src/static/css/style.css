@@ -13,3 +13,11 @@
     padding-top: 35px;
     cursor: pointer;
 }
+
+.game-square.x {
+    background-color: #e38a31;
+}
+
+.game-square.o {
+    background-color: #e6e14a;
+}

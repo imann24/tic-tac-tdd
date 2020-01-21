@@ -9,6 +9,9 @@ The game of Tic-Tac-Toe, written using [Test Driven Development](https://www.fre
 
 ## Commands
 1. `yarn test` -- runs all tests
+1. `yarn build` -- build as a static web page
+1. `yarn dev` -- run a dev server which rebuilds on changes
+1. `yarn start` -- runs a web server against the build folder (must run `yarn build` first)
 
 ## Docker Setup
 1. Install `docker`: https://www.docker.com/get-started

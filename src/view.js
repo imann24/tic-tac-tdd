@@ -1,12 +1,13 @@
 const boardSize = require("./constants.js").BOARD_SIZE;
 
+const gameSquareClass = "game-square";
 const listeners = [];
 let squares;
 
 const createSquare = (x, y) => {
     const square = document.createElement("div");
     
-    square.className = "game-square";
+    square.className = gameSquareClass;
     square.setAttribute("data-x", x);
     square.setAttribute("data-y", y);
     square.onclick = notifyListeners;
@@ -35,7 +36,9 @@ const createBoard = () => {
 const drawBoard = (board) => {
     for (let y = 0; y < boardSize; y++) {
         for (let x = 0; x < boardSize; x++) {
+            const squareUsed = board[x][y] != null;
             squares[y][x].innerHTML = board[x][y] || "";
+            squares[y][x].className = squareUsed ? `${gameSquareClass} ${board[x][y]}` : gameSquareClass;
         }
     }
 };
