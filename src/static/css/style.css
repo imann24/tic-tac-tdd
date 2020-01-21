@@ -1,0 +1,15 @@
+.board {
+    width: 625px;
+}
+
+.game-square {
+    width: 200px;
+    height: 165px;
+    background-color: #3890c7;
+    float: left;
+    border: 2px solid #14537a;
+    font-size: 100px;
+    text-align: center;
+    padding-top: 35px;
+    cursor: pointer;
+}

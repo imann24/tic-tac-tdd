@@ -2,12 +2,27 @@
   "name": "tic-tac-tdd",
   "version": "1.0.0",
   "description": "Tic-Tac-Toe created via test-driven-development",
-  "main": "src/game.js",
+  "private": true,
   "scripts": {
-      "test": "jest tst/*"
+    "test": "jest tst/*",
+    "build": "webpack",
+    "dev": "http-server build"
   },
   "license": "MIT",
   "dependencies": {
     "jest": "^24.9.0"
+  },
+  "devDependencies": {
+    "css-loader": "^3.4.2",
+    "html-webpack-plugin": "^3.2.0",
+    "http-server": "^0.12.1",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/tst/__mocks__/style.mock.js"
+    }
   }
 }

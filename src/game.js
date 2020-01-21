@@ -1,7 +1,8 @@
+const boardSize = require("./constants.js").BOARD_SIZE;
+
 const xSymbol = "x";
 const oSymbol = "o";
 const allowedLetters = new Set([xSymbol, oSymbol]);
-const boardSize = 3;
 let board;
 let state;
 
