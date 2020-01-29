@@ -78,6 +78,17 @@ describe("game logic tests", () => {
             expect(gameState.hasOwnProperty('winner')).toBeTruthy();
             expect(gameState.turn).toBe("x");
             expect(gameState.winner).toBe(false);
+            expect(gameState.winningPositions).toMatchObject([]);
+        });
+
+        it("can return the winning positions", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 0, 1);
+            game.placeLetter("x", 1, 1);
+            game.placeLetter("o", 1, 2);
+            game.placeLetter("x", 2, 2);
+
+            expect(game.getState().winningPositions).toMatchObject([[0, 0], [1, 1], [2, 2]]);
         });
 
         it("can identify when a player has won the game diagonally: NW -> SE", () => {
@@ -88,6 +99,7 @@ describe("game logic tests", () => {
             game.placeLetter("x", 2, 2);
 
             expect(game.getState().winner).toBe("x");
+            expect(game.getState().winningPositions).toMatchObject([[0, 0], [1, 1], [2, 2]]);
         });
 
         it("can identify when a player has won the game diagonally: SW -> NE", () => {
@@ -98,6 +110,7 @@ describe("game logic tests", () => {
             game.placeLetter("x", 2, 0);
 
             expect(game.getState().winner).toBe("x");
+            expect(game.getState().winningPositions).toMatchObject([[0, 2], [1, 1], [2, 0]]);
         });
 
         it("can identify when a player has won the game horizontally", () => {
@@ -108,6 +121,7 @@ describe("game logic tests", () => {
             game.placeLetter("x", 2, 0);
 
             expect(game.getState().winner).toBe("x");
+            expect(game.getState().winningPositions).toMatchObject([[0, 0], [1, 0], [2, 0]]);
         });
 
         it("can identify when a player has won the game vertically", () => {
@@ -118,6 +132,7 @@ describe("game logic tests", () => {
             game.placeLetter("x", 0, 2);
 
             expect(game.getState().winner).toBe("x");
+            expect(game.getState().winningPositions).toMatchObject([[0, 0], [0, 1], [0, 2]]);
         });
 
         it("can identify when a 'o' player has won the game", () => {
@@ -129,6 +144,7 @@ describe("game logic tests", () => {
             game.placeLetter("o", 2, 1);
 
             expect(game.getState().winner).toBe("o");
+            expect(game.getState().winningPositions).toMatchObject([[0, 1], [1, 1], [2, 1]]);
         });
     });
 

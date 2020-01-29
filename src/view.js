@@ -1,6 +1,7 @@
 const boardSize = require("./constants.js").BOARD_SIZE;
 
 const gameSquareClass = "game-square";
+const stateAttribute = "state";
 const listeners = [];
 let squares;
 
@@ -57,9 +58,16 @@ const getSquare = (x, y) => {
     return squares[y][x];
 };
 
+const showWin = (positions) => {
+    for (const pos of positions) {
+        squares[pos[1]][pos[0]].setAttribute(stateAttribute, "win");
+    }
+};
+
 module.exports = {
     createBoard,
     drawBoard,
     listenForClicks,
-    getSquare
+    getSquare,
+    showWin
 };

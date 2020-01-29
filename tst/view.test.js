@@ -35,7 +35,20 @@ describe("drawing", () => {
         expect(view.getSquare(0, 0).className).toBe("game-square x");
         expect(view.getSquare(0, 1).innerHTML).toBe("o");
         expect(view.getSquare(0, 1).className).toBe("game-square o");
-    })
+    });
+
+    it("can highlight squares on win", () => {
+        const board = view.createBoard();
+        view.drawBoard([["x", null, "o"],
+                        [null, "x", "o"],
+                        [null, null, "x"]]);
+
+        view.showWin([[0, 0], [1, 1,], [2, 2]]);
+        
+        expect(view.getSquare(0, 0).getAttribute("state")).toBe("win");
+        expect(view.getSquare(0, 0).getAttribute("state")).toBe("win");
+        expect(view.getSquare(0, 0).getAttribute("state")).toBe("win");
+    });
 });
 
 describe("player input", () => {

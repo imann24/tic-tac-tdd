@@ -13,7 +13,8 @@ const start = () => {
     }
     state = {
         turn: xSymbol,
-        winner: false
+        winner: false,
+        winningPositions: []
     };
 };
 
@@ -56,30 +57,36 @@ const checkForWin = () => {
         }
         if (potentialHorizontalWinner) {
             state.winner = potentialHorizontalWinner;
+            state.winningPositions = Array.from({ length: 3 }, (v, n) => [n, i]);
             return;
         }
         if (potentialVerticalWinner) {
             state.winner = potentialVerticalWinner;
+            state.winningPositions = Array.from({ length: 3 }, (v, n) => [i, n]);
             return;
         }
     }
-
     // Diagonal
-    for (const letter of allowedLetters) {
-        if (board[0][0] === letter && 
-            board[1][1] === letter && 
-            board[2][2] === letter) {
-            state.winner = letter;
-            return;
+    let potentialNorthWestWinner = board[0][0];
+    let potentialSouthWestWinner = board[0][boardSize - 1];
+    for (let i = 1; i < boardSize; i++) {
+        if (potentialNorthWestWinner !== board[i][i]) {
+            potentialNorthWestWinner = false;
         }
-        if (board[2][0] === letter && 
-            board[1][1] === letter && 
-            board[0][2] === letter) {
-            state.winner = letter;
-            return;
+        if (potentialSouthWestWinner !== board[i][boardSize - i - 1]) {
+            potentialSouthWestWinner = false;
         }
     }
-
+    if (potentialNorthWestWinner) {
+        state.winner = potentialNorthWestWinner;
+        state.winningPositions = [[0, 0], [1, 1], [2, 2]];
+        return;
+    }
+    if (potentialSouthWestWinner) {
+        state.winner = potentialSouthWestWinner;
+        state.winningPositions = [[0, 2], [1, 1], [2, 0]];
+        return;
+    }
 };
 
 const placeLetter = (letter, x, y) => {

@@ -44,3 +44,31 @@ describe("user input", () => {
         document.body.innerHTML = "";
     })
 });
+
+describe("game state", () => {
+    let index;
+    beforeEach(() => {
+        index = require("../src/index.js");
+    });
+
+    it("can refresh view", () => {
+        index.refreshView();
+    });
+
+    it("can handle game win", () => {
+        index.setUpGame();
+        const game = index.getGame();
+        game.placeLetter("x", 0, 0);
+        game.placeLetter("o", 0, 1);
+        game.placeLetter("x", 1, 0);
+        game.placeLetter("o", 1, 2);
+        game.placeLetter("x", 2, 0);
+        index.refreshView();
+        
+        for (let x = 0; x < 3; x++) {
+            const gameSquare = document.getElementsByClassName("game-square").item(x);
+            expect(gameSquare.getAttribute("state")).toBe("win");
+        }
+    })
+});
+

@@ -21,3 +21,9 @@
 .game-square.o {
     background-color: #e6e14a;
 }
+
+div[state="win"] {
+    border: 5px solid black;
+    width: 194px;
+    height: 159px;    
+}

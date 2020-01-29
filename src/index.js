@@ -19,8 +19,16 @@ const handleClicks = () => {
         const x = parseInt(elem.getAttribute("data-x"));
         const y = parseInt(elem.getAttribute("data-y"));
         game.placeLetter(letter, x, y);
-        view.drawBoard(game.getBoard());
+        refreshView();
     });
+};
+
+const refreshView = () => {
+    view.drawBoard(game.getBoard());
+    const gameState = game.getState();
+    if (gameState.winner) {
+        view.showWin(gameState.winningPositions);
+    }
 };
 
 const getGame = () => {
@@ -31,5 +39,6 @@ window.addEventListener("load", setUpGame);
 
 module.exports = {
     setUpGame,
+    refreshView,
     getGame
 };
