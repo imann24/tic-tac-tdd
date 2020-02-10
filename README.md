@@ -1,7 +1,8 @@
 # Tic-Tac-TDD
 The game of Tic-Tac-Toe, written using [Test Driven Development](https://www.freecodecamp.org/news/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2/)
 
-![](https://github.com/imann24/tic-tac-tdd/workflows/Tests/badge.svg)
+[![](https://github.com/imann24/tic-tac-tdd/workflows/Tests/badge.svg)](https://github.com/imann24/tic-tac-tdd/actions)
+[![Coverage Status](https://coveralls.io/repos/github/imann24/tic-tac-tdd/badge.svg?branch=develop)](https://coveralls.io/github/imann24/tic-tac-tdd?branch=develop)
 
 ## Setup
 1. Install `yarn` package manager: https://yarnpkg.com

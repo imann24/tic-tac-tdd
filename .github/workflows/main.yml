@@ -28,3 +28,20 @@ jobs:
             run: docker build . -t $DOCKER_TAG
           - name: Docker Test
             run: docker run $DOCKER_TAG yarn test
+
+    coverage-test:
+        name: Coverage Test
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v1
+          - uses: actions/setup-node@v1
+            with:
+              node-version: '11.5'
+          - name: Install
+            run: yarn install
+          - name: Test with Coverage
+            run: yarn cov
+          - name: Publish to Coveralls
+            uses: coverallsapp/github-action@master
+            with:
+              github-token: ${{ secrets.GITHUB_TOKEN }}
