@@ -4,6 +4,7 @@ const gameSquareClass = "game-square";
 const stateAttribute = "state";
 const listeners = [];
 let squares;
+let playAgainButton;
 
 const createSquare = (x, y) => {
     const square = document.createElement("div");
@@ -34,15 +35,33 @@ const createBoard = () => {
     return boardView;
 };
 
+const createPlayAgainButton = (onPlayAgain) => {
+    playAgainButton = document.createElement("div");
+
+    playAgainButton.id = "play-again";
+    playAgainButton.style.display = "none";
+    playAgainButton.innerText = "Play Again";
+    playAgainButton.onclick = onPlayAgain;
+
+    return playAgainButton;
+};
+
 const drawBoard = (board) => {
     for (let y = 0; y < boardSize; y++) {
         for (let x = 0; x < boardSize; x++) {
             const squareUsed = board[x][y] != null;
             squares[y][x].innerHTML = board[x][y] || "";
             squares[y][x].className = squareUsed ? `${gameSquareClass} ${board[x][y]}` : gameSquareClass;
+            if (!board[x][y]) {
+                squares[x][y].setAttribute(stateAttribute, "");
+            }
         }
     }
 };
+
+const togglePlayAgainVisible = (isVisible) => {
+    playAgainButton.style.display = isVisible ? "block" : "none";
+}
 
 const notifyListeners = (click) => {
     listeners.forEach((listener) => {
@@ -66,7 +85,9 @@ const showWin = (positions) => {
 
 module.exports = {
     createBoard,
+    createPlayAgainButton,
     drawBoard,
+    togglePlayAgainVisible,
     listenForClicks,
     getSquare,
     showWin

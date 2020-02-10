@@ -15,29 +15,64 @@ describe("setting up the app", () => {
 
         expect(document.getElementsByClassName("board").length).toBe(1);
     });
+
+    it("can add play again button to the window", () => {
+        index.setUpGame();
+
+        const playAgainButton = document.getElementById("play-again");
+        expect(playAgainButton).toBeInstanceOf(HTMLElement);
+        expect(playAgainButton.onclick).toBeInstanceOf(Function);
+    });
 });
 
 describe("user input", () => {
     let index;
     beforeEach(() => {
         index = require("../src/index.js");
+        index.setUpGame();
     });
 
     it("can send a click from view to game", () => {
-        index.setUpGame();
-
         document.getElementsByClassName("game-square").item(0).click();
 
         expect(index.getGame().getBoard()[0][0]).toBe("x");
     });
 
     it("draws game updates to the view", () => {
-        index.setUpGame();
         const topLeftSquare = document.getElementsByClassName("game-square").item(0);
 
         topLeftSquare.click();
         
         expect(topLeftSquare.innerHTML).toBe("x");
+    });
+
+    it("hides 'play again' button by default", () => {
+        const playAgainButton = document.getElementById("play-again");
+
+        expect(playAgainButton.style.display).toBe("none");
+    });
+
+    it("handles a 'play again' clicked", () => {
+        const game = index.getGame();
+        game.placeLetter("x", 0, 0);
+        game.placeLetter("o", 0, 1);
+        game.placeLetter("x", 1, 0);
+        game.placeLetter("o", 1, 2);
+        game.placeLetter("x", 2, 0);
+        index.refreshView();
+        const playAgainButton = document.getElementById("play-again");
+
+        playAgainButton.click();
+
+        expect(game.getState().wiiner).toBeFalsy();
+        expect(game.getBoard()).toMatchObject([[null, null, null], 
+                                               [null, null, null],
+                                               [null, null, null]]);
+        expect(playAgainButton.style.display).toBe("none");
+        for (let x = 0; x < 9; x++) {
+            const gameSquare = document.getElementsByClassName("game-square").item(x);
+            expect(gameSquare.getAttribute("state")).toBe("");
+        }
     });
 
     afterEach(() => {
@@ -69,6 +104,9 @@ describe("game state", () => {
             const gameSquare = document.getElementsByClassName("game-square").item(x);
             expect(gameSquare.getAttribute("state")).toBe("win");
         }
+
+        const winButton = document.getElementById("play-again");
+        expect(winButton.style.display).toBe("block");
     })
 });
 

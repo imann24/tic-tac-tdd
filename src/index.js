@@ -11,6 +11,11 @@ const setUpGame = () => {
 
 const addGameToWindow = () => {
     document.body.appendChild(view.createBoard());
+    document.body.appendChild(view.createPlayAgainButton(() => {
+        game.start();
+        view.togglePlayAgainVisible(false);
+        refreshView();
+    }));
 }
 
 const handleClicks = () => {
@@ -28,6 +33,7 @@ const refreshView = () => {
     const gameState = game.getState();
     if (gameState.winner) {
         view.showWin(gameState.winningPositions);
+        view.togglePlayAgainVisible(true);
     }
 };
 

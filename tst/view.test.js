@@ -24,6 +24,34 @@ describe("drawing", () => {
         }
     });
 
+    it("can create a 'play again' button", () => {
+        const mockCallback = jest.fn();
+        const playAgainButton = view.createPlayAgainButton(mockCallback);
+
+        expect(playAgainButton).toBeInstanceOf(HTMLElement);
+        expect(playAgainButton.id).toBe("play-again");
+        expect(playAgainButton.style.display).toBe("none");
+        expect(playAgainButton.innerText).toBe("Play Again");
+        expect(playAgainButton.onclick).toBe(mockCallback);
+    });
+
+    it("can show the 'play again' button", () => {
+        const playAgainButton = view.createPlayAgainButton();
+
+        view.togglePlayAgainVisible(true);
+
+        expect(playAgainButton.style.display).toBe("block");
+    });
+
+    it("can hide the 'play again' button", () => {
+        const playAgainButton = view.createPlayAgainButton();
+        playAgainButton.style.display = "block";
+
+        view.togglePlayAgainVisible(false);
+
+        expect(playAgainButton.style.display).toBe("none");
+    });
+
     it("can draw a board", () => {
         const board = view.createBoard();
 
