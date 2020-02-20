@@ -1,4 +1,7 @@
-const boardSize = require("./constants.js").BOARD_SIZE;
+const contants = require("./constants.js"),
+    logger = require("./logger.js"),
+    boardSize = contants.BOARD_SIZE,
+    drawStatus = contants.GAME_DRAW_STATUS;
 
 const xSymbol = "x";
 const oSymbol = "o";
@@ -35,16 +38,22 @@ const nextTurn = (letter) => {
 };
 
 const isValidMove = (letter, x, y) => {
-    return allowedLetters.has(letter) && 
-            inBounds(x, y) && 
+    return allowedLetters.has(letter) &&
+            inBounds(x, y) &&
             board[x][y] === null &&
             state.turn === letter &&
             !state.winner;
 };
 
 const checkForWin = () => {
+    let unplacedSquares = boardSize ** 2;
+
     // Horizontal && Vertical
+    const countPlacedInColumn = (column) => {
+        return board[column].filter((v) => v !== null).length;
+    };
     for (let i = 0; i < boardSize; i++) {
+        unplacedSquares -= countPlacedInColumn(i);
         let potentialHorizontalWinner = board[0][i];
         let potentialVerticalWinner = board[i][0];
         for (let j = 1; j < boardSize; j++) {
@@ -87,6 +96,11 @@ const checkForWin = () => {
         state.winningPositions = [[0, 2], [1, 1], [2, 0]];
         return;
     }
+
+    if (unplacedSquares === 0) {
+        state.winner = drawStatus;
+        return;
+    }
 };
 
 const placeLetter = (letter, x, y) => {
@@ -94,6 +108,8 @@ const placeLetter = (letter, x, y) => {
         board[x][y] = letter;
         state.turn = nextTurn(letter);
         checkForWin();
+    } else {
+        logger.debug(`Invalid move for ${letter} at (${x}, ${y})`);
     }
 };
 

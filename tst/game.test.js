@@ -19,9 +19,9 @@ describe("game logic tests", () => {
             game.start();
             game.placeLetter("x", 1, 1);
             game.placeLetter("o", 0, 0);
-    
+
             game.start();
-    
+
             const boardState = game.getBoard();
             for (const column of boardState) {
                 for (const square of column) {
@@ -33,9 +33,9 @@ describe("game logic tests", () => {
         it("resets the game state on start", () => {
             game.start();
             game.placeLetter("x", 0, 0);
-    
+
             game.start();
-    
+
             const gameState = game.getState();
             expect(gameState.turn).toBe("x");
         })
@@ -46,18 +46,18 @@ describe("game logic tests", () => {
             game.start();
         });
 
-        it("can retrieve board state", () => {            
+        it("can retrieve board state", () => {
             const boardState = game.getBoard();
-            
+
             expect(boardState.length).toBe(3);
             for (const column of boardState) {
                 expect(column.length).toBe(3);
             }
         });
-    
+
         it("starts with all squares on board empty", () => {
             const boardState = game.getBoard();
-    
+
             for (const column of boardState) {
                 for (const square of column) {
                     expect(square).toBeNull();
@@ -146,6 +146,20 @@ describe("game logic tests", () => {
             expect(game.getState().winner).toBe("o");
             expect(game.getState().winningPositions).toMatchObject([[0, 1], [1, 1], [2, 1]]);
         });
+
+        it("can identify when the game is a draw", () => {
+            game.placeLetter("x", 0, 0);
+            game.placeLetter("o", 1, 0);
+            game.placeLetter("x", 2, 0);
+            game.placeLetter("o", 2, 1);
+            game.placeLetter("x", 0, 1);
+            game.placeLetter("o", 0, 2);
+            game.placeLetter("x", 1, 1);
+            game.placeLetter("o", 2, 2);
+            game.placeLetter("x", 1, 2);
+
+            expect(game.getState().winner).toBe("draw");
+        });
     });
 
     describe("placing letters", () => {
@@ -155,30 +169,30 @@ describe("game logic tests", () => {
 
         it("can place a letter 'x'", () => {
             game.placeLetter("x", 0, 0);
-    
+
             const letter = game.getBoard()[0][0];
             expect(letter).toBe("x");
         });
-    
+
         it("can place a letter 'o'", () => {
             game.placeLetter("x", 1, 1);
-            
+
             game.placeLetter("o", 0, 0);
-    
+
             const letter = game.getBoard()[0][0];
             expect(letter).toBe("o");
         });
-    
+
         it("cannot place an invalid letter", () => {
             game.placeLetter("z", 0, 0);
-    
+
             const letter = game.getBoard()[0][0];
             expect(letter).toBe(null);
         });
-    
+
         it("cannot place a letter out of bounds", () => {
             game.placeLetter("o", -1, 3);
-    
+
             const boardState = game.getBoard();
             for (const column of boardState) {
                 for (const square of column) {
@@ -190,20 +204,20 @@ describe("game logic tests", () => {
         it("cannot replace an existing letter", () => {
             game.placeLetter("x", 0, 0);
             game.placeLetter("o", 0, 0);
-    
+
             const letter = game.getBoard()[0][0];
             expect(letter).toBe("x");
         });
 
         it("turn changes after placing letter", () => {
             game.placeLetter("x", 0, 0) ;
-            
+
             expect(game.getState().turn).toBe("o");
         });
 
         it("ignores moves on the wrong turn", () => {
             game.placeLetter("o", 0, 0) ;
-            
+
             expect(game.getState().turn).toBe("x");
             const letter = game.getBoard()[0][0];
             expect(letter).toBe(null);

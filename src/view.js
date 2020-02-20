@@ -8,7 +8,7 @@ let playAgainButton;
 
 const createSquare = (x, y) => {
     const square = document.createElement("div");
-    
+
     square.className = gameSquareClass;
     square.setAttribute("data-x", x);
     square.setAttribute("data-y", y);
@@ -19,9 +19,9 @@ const createSquare = (x, y) => {
 
 const createBoard = () => {
     const boardView = document.createElement("div");
-    
+
     boardView.className = "board";
-    
+
     squares = [];
     for (let y = 0; y < boardSize; y++) {
         squares.push([]);

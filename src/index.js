@@ -1,7 +1,9 @@
 require("./static/css/style.css");
 
-const game = require("./game.js")
-const view = require("./view.js")
+const game = require("./game.js"),
+    view = require("./view.js"),
+    logger = require("./logger.js"),
+    drawState = require("./constants.js").GAME_DRAW_STATUS;
 
 const setUpGame = () => {
     game.start();
@@ -32,7 +34,10 @@ const refreshView = () => {
     view.drawBoard(game.getBoard());
     const gameState = game.getState();
     if (gameState.winner) {
-        view.showWin(gameState.winningPositions);
+        logger.debug(`Win state is ${gameState.winner}`);
+        if (gameState.winner !== drawState) {
+            view.showWin(gameState.winningPositions);
+        }
         view.togglePlayAgainVisible(true);
     }
 };

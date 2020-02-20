@@ -13,6 +13,11 @@ The game of Tic-Tac-Toe, written using [Test Driven Development](https://www.fre
 1. `yarn build` -- build as a static web page
 1. `yarn dev` -- run a dev server which rebuilds on changes
 1. `yarn start` -- runs a web server against the build folder (must run `yarn build` first)
+1. `yarn cov` -- test and generate test coverage report
+1. `yarn test -t '<search filter>'` -- only run tests which meet search filter
+
+## Environment Variables
+1. `TIC_TAC_DEBUG` -- if set to `true`, adds verbose logging
 
 ## Docker Setup
 1. Install `docker`: https://www.docker.com/get-started

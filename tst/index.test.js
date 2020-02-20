@@ -42,7 +42,7 @@ describe("user input", () => {
         const topLeftSquare = document.getElementsByClassName("game-square").item(0);
 
         topLeftSquare.click();
-        
+
         expect(topLeftSquare.innerHTML).toBe("x");
     });
 
@@ -65,7 +65,7 @@ describe("user input", () => {
         playAgainButton.click();
 
         expect(game.getState().wiiner).toBeFalsy();
-        expect(game.getBoard()).toMatchObject([[null, null, null], 
+        expect(game.getBoard()).toMatchObject([[null, null, null],
                                                [null, null, null],
                                                [null, null, null]]);
         expect(playAgainButton.style.display).toBe("none");
@@ -84,6 +84,9 @@ describe("game state", () => {
     let index;
     beforeEach(() => {
         index = require("../src/index.js");
+        index.getGame().start();
+        // Necessary to reset the UI each time:
+        index.refreshView();
     });
 
     it("can refresh view", () => {
@@ -99,7 +102,7 @@ describe("game state", () => {
         game.placeLetter("o", 1, 2);
         game.placeLetter("x", 2, 0);
         index.refreshView();
-        
+
         for (let x = 0; x < 3; x++) {
             const gameSquare = document.getElementsByClassName("game-square").item(x);
             expect(gameSquare.getAttribute("state")).toBe("win");
@@ -108,5 +111,27 @@ describe("game state", () => {
         const winButton = document.getElementById("play-again");
         expect(winButton.style.display).toBe("block");
     })
-});
 
+    it("can handle game draw", () => {
+        index.setUpGame();
+        const game = index.getGame();
+        game.placeLetter("x", 0, 0);
+        game.placeLetter("o", 1, 0);
+        game.placeLetter("x", 2, 0);
+        game.placeLetter("o", 2, 1);
+        game.placeLetter("x", 0, 1);
+        game.placeLetter("o", 0, 2);
+        game.placeLetter("x", 1, 1);
+        game.placeLetter("o", 2, 2);
+        game.placeLetter("x", 1, 2);
+        index.refreshView();
+
+        for (let i = 0; i < 9; i++) {
+            const gameSquare = document.getElementsByClassName("game-square").item(i);
+            expect(gameSquare.getAttribute("state")).toBeFalsy();
+        }
+
+        const winButton = document.getElementById("play-again");
+        expect(winButton.style.display).toBe("block");
+    })
+});
